@@ -47,26 +47,14 @@ class TwitterBot:
 
     # Generate a response using the language model with the template
     def generate_response(self, mentioned_conversation_tweet_text):
-        # It would be nice to bring in information about the links, pictures, etc. But out of scope for now
-        system_template = """
-            You are an incredibly wise, supportive, personable and well-read therapist.
-            Your goal is to give a concise alternative perspectives in response to a piece of text from the user.
-            
-            % RESPONSE TONE:
+        text_prompt = f"""
+        Following is an opinion from a well-known public figure that analyze a social phenomenon from certain angles.
+        In order to critically analyze the merit of this opinion, we need to counter the opinion with drastically refreshing perspective on this opinion. 
+        Please provide such opinion with the original opinion below:
 
-            - Your prediction should be given in an passive voice and be objective
-            - Your tone should be informative
-            
-            % RESPONSE FORMAT:
-
-            - Respond in under 200 characters
-            - Respond in two or less short sentences
-            
-            % RESPONSE CONTENT:
-
-            - Include specific examples of famous quotes if they are relevant
-            - If you don't have an answer, say, "Sorry, my magic 8 ball isn't working right now 🔮"
+        {mentioned_conversation_tweet_text}
         """
+        
         system_message_prompt = SystemMessagePromptTemplate.from_template(system_template)
 
         human_template="{text}"
